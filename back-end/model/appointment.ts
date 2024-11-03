@@ -1,38 +1,53 @@
-import { User } from './user';
+import { Patient } from "./patient";
+import { Clinic } from "./clinic";
+import { Doctor } from "./doctor";
 
 export class Appointment {
-
-    private appointmentID?: number;
-    private doctor: User;
-    private appointmentDate: Date;
+    private id?: number;
+    private date: Date;
     private time: string;
-    private notice: string;
+    private patient: Patient;
+    private doctor: Doctor;
+    private clinic: Clinic;
 
-    constructor(appointment: { appointmentID?: number; doctor: User; appointmentDate: Date; time: string; notice: string; }) {
-        this.appointmentID = appointment.appointmentID;
-        this.doctor = appointment.doctor;
-        this.appointmentDate = appointment.appointmentDate;
+    constructor(appointment: { id?: number; date: Date; time: string; patient: Patient; doctor: Doctor; clinic: Clinic; }) {
+        this.id = appointment.id;
+        this.date = appointment.date;
         this.time = appointment.time;
-        this.notice = appointment.notice;
+        this.patient = appointment.patient;
+        this.doctor = appointment.doctor;
+        this.clinic = appointment.clinic;
     }
 
-    getDoctor(): User {
-        return this.doctor;
+    getId(): number | undefined {
+        return this.id;
     }
 
-    getAppointmentDate(): Date {
-        return this.appointmentDate;
+    getDate(): Date {
+        return this.date;
     }
 
     getTime(): string {
         return this.time;
     }
 
-    getAppointmentID(): number | undefined {
-        return this.appointmentID;
+    getPatient(): Patient {
+        return this.patient;
     }
 
-    getNotice(): string {
-        return this.notice;
+    getDoctor(): Doctor {
+        return this.doctor;
+    }
+
+    getClinic(): Clinic {
+        return this.clinic;
+    }
+
+    equals(appointment: Appointment): boolean {
+        return this.date === appointment.date
+            && this.time === appointment.time
+            && this.patient.equals(appointment.patient)
+            && this.doctor.equals(appointment.doctor)
+            && this.clinic.equals(appointment.clinic)
     }
 }
