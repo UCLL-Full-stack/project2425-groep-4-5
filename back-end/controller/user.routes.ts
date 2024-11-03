@@ -1,59 +1,69 @@
+import { Router, Request, Response, NextFunction } from 'express';
+import UserService from '../service/user.service';
+import { UserInput } from '../types';
+
+const userRouter = Router();
+
 /**
  * @swagger
- *   components:
- *    securitySchemes:
- *     bearerAuth:
- *      type: http
- *      scheme: bearer
- *      bearerFormat: JWT
- *    schemas:
- *      Lecturer:
- *          type: object
- *          properties:
- *            id:
- *              type: number
- *              format: int64
- *            name:
- *              type: string
- *              description: Lecturer name.
- *            expertise:
- *              type: string
- *              description: Lecturer expertise.
+ * components:
+ *   schemas:
+ *     UserInput:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           description: The user's email
+ *         password:
+ *           type: string
+ *           description: The user's password
+ *       example:
+ *         email: user@example.com
+ *         password: password123
  */
-import express, { NextFunction, Request, response, Response } from 'express'
-import { UserInput } from '../types';
-import userService from "../service/user.service"
-const userRouter = express.Router();
 
 /**
  * @swagger
  * /users/add:
  *   post:
- *      summary: Create a new schedule for an existing lecturer and course.
- *      requestBody:
- *        required: true
- *        content:
- *          application/json:
- *            schema:
- *              $ref: '#/components/schemas/ScheduleInput'
- *      responses:
- *         200:
- *            description: The created schedule.
- *            content:
- *              application/json:
- *                schema:
- *                  $ref: '#/components/schemas/Schedule'
+ *     summary: Register a new user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserInput'
+ *     responses:
+ *       200:
+ *         description: The user was successfully created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   description: The user ID
+ *                 email:
+ *                   type: string
+ *                   description: The user's email
+ *       500:
+ *         description: Account already exists.
  */
 
 userRouter.post('/add', async (req: Request, res: Response, next: NextFunction) => {
     try {
         const newUser = <UserInput>req.body;
-        const result = await userService.registerUser(newUser);
+        const result = await UserService.registerUser(newUser);
         res.status(200).json(result);
     }
     catch (error) {
-        next(error)
+        res.status(500).json(error)
     }
-})
+});
 
-export default userRouter
+export default userRouter;

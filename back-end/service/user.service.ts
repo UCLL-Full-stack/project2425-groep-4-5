@@ -5,7 +5,12 @@ const registerUser = (userInput: UserInput) => {
     if (userDB.getUserByEmail(userInput.email)) {
         throw new Error("Email is already in use.")
     }
-    return userDB.saveUser(userInput);
+    userDB.saveUser(userInput);
+    return "Account successfully created"
 }
 
-export default { registerUser }
+const UserService = {
+    registerUser
+}
+
+export default UserService
