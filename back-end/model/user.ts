@@ -7,16 +7,15 @@ export class User {
     private email: string;
     private password: string;
     private role: Role;
-    private userProfile: Profile;
+    //private userProfile: Profile;
     private userAppointments: Appointment[];
 
-    constructor(user: { userId?: number; email: string; password: string; role: Role; userProfile: Profile; userAppointments: Appointment[]; }) {
+    constructor(user: { userId?: number; email: string; password: string; }) {
         this.userId = user.userId;
         this.email = user.email;
         this.password = user.password;
-        this.role = user.role;
-        this.userProfile = user.userProfile;
-        this.userAppointments = user.userAppointments;
+        this.role = "patient";
+        this.userAppointments = []
     }
 
     getUserId(): number | undefined {
@@ -35,11 +34,11 @@ export class User {
         return this.role;
     }
 
-    getUserProfile(): Profile {
+    /*getUserProfile(): Profile {
         return this.userProfile;
     }
 
     getUserAppointments(): Appointment[] {
         return this.userAppointments;
-    }
+    }*/
 }
