@@ -10,7 +10,7 @@ export class Clinic {
     private openingHours: string
     private doctors: Doctor [] = [];
 
-    constructor(clinic: { id?: number; name: string; address: string; phone: string; email: string; description?: string; openingHours: string; }) {
+    constructor(clinic: { id?: number; name: string; address: string; phone: string; email: string; description?: string; openingHours: string; doctors: Doctor[]; }) {
         this.id = clinic.id;
         this.name = clinic.name;
         this.address = clinic.address;
@@ -18,6 +18,7 @@ export class Clinic {
         this.email = clinic.email;
         this.description = clinic.description;
         this.openingHours = clinic.openingHours;
+        this.doctors = clinic.doctors || [];
     }
     getId(): number | undefined {
         return this.id;
@@ -41,6 +42,10 @@ export class Clinic {
         return this.openingHours;
     }
 
+    getDoctors(): Doctor[] {
+        return this.doctors;
+    }
+
     equals(clinic: Clinic): boolean {
         return this.name === clinic.name
             && this.address === clinic.address
@@ -48,5 +53,6 @@ export class Clinic {
             && this.email === clinic.email
             && this.description === clinic.description
             && this.openingHours === clinic.openingHours
+            && this.doctors.every((doctor, index) => doctor.equals(clinic.doctors[index]));
     }
 }
