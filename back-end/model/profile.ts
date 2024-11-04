@@ -14,4 +14,8 @@ export class Profile {
     getAge(): number {
         return this.age;
     }
+
+    equals(profile: Profile): boolean {
+        return this.medicalHistory === profile.medicalHistory && this.age === profile.age;
+    }
 }

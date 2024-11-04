@@ -34,11 +34,18 @@ export class User {
         return this.role;
     }
 
-    /*getUserProfile(): Profile {
-        return this.userProfile;
-    }
+    // getUserProfile(): Profile {
+    //     return this.userProfile;
+    // }
 
-    getUserAppointments(): Appointment[] {
-        return this.userAppointments;
-    }*/
+    // getUserAppointments(): Appointment[] {
+    //     return this.userAppointments;
+    // }
+
+    equals(user: User): boolean {
+        return this.email === user.email
+            && this.password === user.password
+            && this.role === user.role
+        //&& this.userProfile.equals(user.userProfile)
+    }
 }
