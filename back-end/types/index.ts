@@ -3,11 +3,17 @@ import { Profile } from "../model/profile";
 
 type Role = 'admin' | 'patient' | 'doctor';
 
-type UserInput = {
+type PatientInput = {
+    name: string;
     email: string,
     password: string,
-    role: Role
+    role?: Role,
+    birthDate: Date
 }
 
+type DoctorInput = {}
+
+type AdminInput = {}
+
 export { Role };
-export { UserInput };
+export { PatientInput };

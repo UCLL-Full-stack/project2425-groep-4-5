@@ -1,25 +1,28 @@
 import { Role } from "../types/index";
-import { Profile } from "./profile";
 import { Appointment } from "./appointment";
 
 export class User {
-    private userId?: number;
-    private email: string;
-    private password: string;
-    private role: Role;
-    //private userProfile: Profile;
+    protected userId?: number;
+    protected name: string;
+    protected email: string;
+    protected password: string;
+    protected role!: Role;
     private userAppointments: Appointment[];
 
-    constructor(user: { userId?: number; email: string; password: string; }) {
+    constructor(user: { userId?: number; name: string; email: string; password: string }) {
         this.userId = user.userId;
+        this.name = user.name;
         this.email = user.email;
         this.password = user.password;
-        this.role = "patient";
-        this.userAppointments = []
+        this.userAppointments = [];
     }
 
     getUserId(): number | undefined {
         return this.userId;
+    }
+
+    getName(): string {
+        return this.name;
     }
 
     getEmail(): string {
@@ -34,18 +37,19 @@ export class User {
         return this.role;
     }
 
-    // getUserProfile(): Profile {
-    //     return this.userProfile;
-    // }
+    getAppointments(): Appointment[] {
+        return this.userAppointments;
+    }
 
-    // getUserAppointments(): Appointment[] {
-    //     return this.userAppointments;
-    // }
-
+    // Equals method to compare two User objects
     equals(user: User): boolean {
+        // You can also compare the appointments if needed.
+        const appointmentsEqual = this.userAppointments.length === user.userAppointments.length &&
+            this.userAppointments.every((appointment, index) => appointment.equals(user.userAppointments[index]));
+
         return this.email === user.email
             && this.password === user.password
             && this.role === user.role
-        //&& this.userProfile.equals(user.userProfile)
+            && appointmentsEqual;
     }
 }

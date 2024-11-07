@@ -1,35 +1,35 @@
+import { Role } from "../types";
 import { Clinic } from "./clinic";
 import { User } from "./user";
 
-export class Doctor {
-    private id?: number
-    private name: string
-    private email: string
-    private specialisation: string
-    private description?: string
-    private clinic: Clinic
-    private user: User
+export class Doctor extends User {
+    private specialisation: string;
+    private description?: string;
+    private clinic: Clinic;
 
-    constructor(doctor: { id?: number; name: string; email: string; specialisation: string; description?: string; clinic: Clinic; user: User; }) {
-        this.id = doctor.id;
-        this.name = doctor.name;
-        this.email = doctor.email;
+    constructor(doctor: { id?: number; name: string; email: string; password: string; specialisation: string; description?: string; clinic: Clinic; }) {
+        super({
+            userId: doctor.id,
+            name: doctor.name,
+            email: doctor.email,
+            password: doctor.password
+        });
+        this.role = "doctor"
         this.specialisation = doctor.specialisation;
         this.description = doctor.description;
         this.clinic = doctor.clinic;
-        this.user = doctor.user;
     }
 
     getId(): number | undefined {
-        return this.id;
+        return this.userId;
     }
 
     getName(): string {
-        return this.name;
+        return this.name;  // Directly accessing the inherited name from User
     }
 
     getEmail(): string {
-        return this.email;
+        return this.email;  // Directly accessing the inherited email from User
     }
 
     getSpecialisation(): string {
@@ -44,16 +44,15 @@ export class Doctor {
         return this.clinic;
     }
 
-    getUser(): User {
-        return this.user;
-    }
-
-    equals(doctor: Doctor): boolean {
+    equals(user: User): boolean {
+        if (!(user instanceof Doctor)) {
+            return false;
+        }
+        const doctor = user as Doctor;
         return this.name === doctor.name
             && this.email === doctor.email
             && this.specialisation === doctor.specialisation
             && this.description === doctor.description
-            && this.clinic.equals(doctor.clinic)
-            && this.user.equals(doctor.getUser());
+            && this.clinic.equals(doctor.clinic);
     }
 }
