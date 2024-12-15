@@ -1,63 +1,46 @@
-import { Role } from "../types";
 import { Appointment } from "./appointment";
-import { MedicalInfo } from "./medicalInfo";
 import { User } from "./user";
+import { Patient as PatientPrisma, User as UserPrisma, Appointment as AppointmentPrisma } from "@prisma/client";
+export class Patient {
+    private id?: number;
+    private user: User;
+    private appointments: Appointment[] = [];
 
-export class Patient extends User {
-    private birthDate: Date;
-    //private patientAppointments: Appointment[];
-    //private medicalInfo?: MedicalInfo;
+    constructor(patient: { user: User, appointments: Appointment[], id?: number }) {
+        this.validate(patient);
 
-    constructor(patient: { userId?: number; name: string; email: string; password: string; role: Role; birthDate: Date; }) {
-        super({
-            userId: patient.userId,
-            name: patient.name,
-            email: patient.email,
-            password: patient.password
-        })
-        this.role = "patient"
-        this.birthDate = patient.birthDate;
-        //this.patientAppointments = patient.patientAppointments;
-        //this.medicalInfo = patient.medicalInfo;
+        this.user = patient.user;
+        this.appointments = patient.appointments;
+        this.id = patient.id;
     }
 
-    getUserId(): number | undefined {
-        return this.userId;
+    getId(): number | undefined {
+        return this.id;
     }
 
-    getName(): string {
-        return this.name
+    getUser(): User {
+        return this.user;
     }
 
-    getEmail(): string {
-        return this.email;
+    getAppointments(): Appointment[] {
+        return this.appointments;
     }
 
-    getPassword(): string {
-        return this.password;
+    validate = (patient: { user: User }) => {
+        if (!patient.user) {
+            throw new Error("User is required!");
+        }
     }
 
-    getRole(): Role {
-        return this.role;
-    }
-
-    getBirthDate(): Date {
-        return this.birthDate;
-    }
-
-    /*getPatientAppointments(): Appointment[] {
-        return this.patientAppointments;
-    }
-
-    getMedicalInfo(): MedicalInfo | undefined {
-        return this.medicalInfo;
-    }*/
-
-    equals(patient: Patient): boolean {
-        return this.name === patient.name
-            && this.email === patient.email
-            && this.birthDate === patient.birthDate
-        //&& this.patientAppointments === patient.patientAppointments
-        //&& this.medicalInfo === patient.medicalInfo
+    static from({
+        id,
+        user,
+        appointments
+    }: PatientPrisma & { user: UserPrisma, appointments: AppointmentPrisma }) {
+        return new Patient({
+            id,
+            user: User.from(user),
+            appointments: appointments.map((appointment) => Appointment.from(appointment))
+        });
     }
 }

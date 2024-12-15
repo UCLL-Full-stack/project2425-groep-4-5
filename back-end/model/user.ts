@@ -1,28 +1,40 @@
-import { Role } from "../types/index";
-import { Appointment } from "./appointment";
+import { Role } from '../types';
+import { User as UserPrisma } from '@prisma/client';
 
 export class User {
-    protected userId?: number;
-    protected name: string;
-    protected email: string;
-    protected password: string;
-    protected role!: Role;
-    private userAppointments: Appointment[];
+    private id: number;
+    private firstName: string;
+    private lastName: string;
+    private email: string;
+    private password: string;
+    private role: Role;
 
-    constructor(user: { userId?: number; name: string; email: string; password: string }) {
-        this.userId = user.userId;
-        this.name = user.name;
+    constructor(user: {
+        id: number,
+        firstName: string,
+        lastName: string,
+        email: string,
+        password: string,
+        role: Role
+    }) {
+        this.validate(user);
+
+        this.id = user.id;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
         this.email = user.email;
         this.password = user.password;
-        this.userAppointments = [];
+        this.role = user.role;
     }
 
-    getUserId(): number | undefined {
-        return this.userId;
+    getId(): number {
+        return this.id;
     }
-
-    getName(): string {
-        return this.name;
+    getFirstName(): string {
+        return this.firstName;
+    }
+    getLastName(): string {
+        return this.lastName;
     }
 
     getEmail(): string {
@@ -37,19 +49,51 @@ export class User {
         return this.role;
     }
 
-    getAppointments(): Appointment[] {
-        return this.userAppointments;
+    validate = (user: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        password: string;
+        role: Role;
+    }) => {
+        if (!user.firstName?.trim()) {
+            throw new Error("First name is required!");
+        }
+        if (!user.lastName?.trim()) {
+            throw new Error("Last name is required!");
+        }
+        if (!user.email?.trim()) {
+            throw new Error("Email is required!");
+        }
+        if (!user.role) {
+            throw new Error("Role is required!");
+        }
+    }
+    equals(user: User): boolean {
+        return (
+            this.firstName === user.getFirstName() &&
+            this.lastName === user.getLastName() &&
+            this.email === user.getEmail() &&
+            this.password === user.getPassword() &&
+            this.role === user.getRole()
+        );
     }
 
-    // Equals method to compare two User objects
-    equals(user: User): boolean {
-        // You can also compare the appointments if needed.
-        const appointmentsEqual = this.userAppointments.length === user.userAppointments.length &&
-            this.userAppointments.every((appointment, index) => appointment.equals(user.userAppointments[index]));
-
-        return this.email === user.email
-            && this.password === user.password
-            && this.role === user.role
-            && appointmentsEqual;
+    static from({
+        id,
+        firstName,
+        lastName,
+        email,
+        password,
+        role
+    }: UserPrisma) {
+        return new User({
+            id,
+            firstName,
+            lastName,
+            email,
+            password,
+            role: role as Role,
+        });
     }
 }

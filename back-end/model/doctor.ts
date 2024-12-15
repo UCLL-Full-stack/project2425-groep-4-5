@@ -1,58 +1,46 @@
-import { Role } from "../types";
-import { Clinic } from "./clinic";
+import { Appointment } from "./appointment";
 import { User } from "./user";
+import { Doctor as DoctorPrisma, User as UserPrisma, Appointment as AppointmentPrisma } from "@prisma/client";
+export class Doctor {
+    private id?: number;
+    private user: User;
+    private appointments: Appointment[] = [];
 
-export class Doctor extends User {
-    private specialisation: string;
-    private description?: string;
-    private clinic: Clinic;
+    constructor(doctor: { user: User, appointments: Appointment[], id?: number }) {
+        this.validate(doctor);
 
-    constructor(doctor: { id?: number; name: string; email: string; password: string; specialisation: string; description?: string; clinic: Clinic; }) {
-        super({
-            userId: doctor.id,
-            name: doctor.name,
-            email: doctor.email,
-            password: doctor.password
-        });
-        this.role = "doctor"
-        this.specialisation = doctor.specialisation;
-        this.description = doctor.description;
-        this.clinic = doctor.clinic;
+        this.user = doctor.user;
+        this.appointments = doctor.appointments;
+        this.id = doctor.id;
     }
 
     getId(): number | undefined {
-        return this.userId;
+        return this.id;
     }
 
-    getName(): string {
-        return this.name;  // Directly accessing the inherited name from User
+    getUser(): User {
+        return this.user;
     }
 
-    getEmail(): string {
-        return this.email;  // Directly accessing the inherited email from User
+    getAppointments(): Appointment[] {
+        return this.appointments;
     }
 
-    getSpecialisation(): string {
-        return this.specialisation;
-    }
-
-    getDescription(): string | undefined {
-        return this.description;
-    }
-
-    getClinic(): Clinic {
-        return this.clinic;
-    }
-
-    equals(user: User): boolean {
-        if (!(user instanceof Doctor)) {
-            return false;
+    validate(doctor: { user: User, appointments: Appointment[], id?: number }) {
+        if (!doctor.user) {
+            throw new Error('User is required!');
         }
-        const doctor = user as Doctor;
-        return this.name === doctor.name
-            && this.email === doctor.email
-            && this.specialisation === doctor.specialisation
-            && this.description === doctor.description
-            && this.clinic.equals(doctor.clinic);
+    }
+
+    static from({
+        id,
+        user,
+        appointments
+    }: DoctorPrisma & { user: UserPrisma; appointments: AppointmentPrisma[] }) {
+        return new Doctor({
+            id,
+            user: User.from(user),
+            appointments: appointments.map((appointment) => Appointment.from(appointment))
+        });
     }
 }

@@ -1,72 +1,52 @@
-import * as dotenv from 'dotenv';
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
-import * as bodyParser from 'body-parser';
-import swaggerJSDoc from 'swagger-jsdoc';
+import * as bodyparser from 'body-parser';
+import { expressjwt } from 'express-jwt';
+import * as dotenv from 'dotenv';
 import swaggerUi from 'swagger-ui-express';
-import { doctorRouter } from './controller/doctor.routes';
-import patientRouter from './controller/patients.routes';
-import appointmentRouter from './controller/appointment.routes';
+import swaggerJSDoc from 'swagger-jsdoc';
 
 const app = express();
+
 dotenv.config();
 const port = process.env.APP_PORT || 3000;
 
+app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(bodyparser.json());
 
-app.use(cors({ origin: 'http://localhost:8080' }));
-
-
-app.use(bodyParser.json());
-
-
-app.use('/patients', patientRouter);
-app.use('/appointments', appointmentRouter);
-app.use('/doctors', doctorRouter);
-
+app.use(
+    expressjwt({
+        secret: process.env.JWT_SECRET || 'default_secret',
+        algorithms: ['HS256']
+    }).unless({
+        path: ['/api-docs', /^\/api-docs\/.*/]
+    })
+);
 
 app.get('/status', (req, res) => {
-    res.json({ message: 'Back-end is running...' });
-});
+    res.json({ message: "PlanArts API is running..." })
+})
 
 const swaggerOpts = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Healthcare API',
-            version: '1.0.0',
-            description: 'API documentation for the Healthcare management system',
-            contact: {
-                name: 'Your Name',
-                email: 'your-email@example.com',
-            },
-        },
-        servers: [
-            {
-                url: 'http://localhost:3000',
-            },
-        ],
+            title: 'PlanArts',
+            version: '1.0.0'
+        }
     },
-    apis: ['./controller/*.routes.ts'],
-};
+    apis: ['./controller/*.routes.ts']
+}
 
-
-const swaggerDocs = swaggerJSDoc(swaggerOpts);
-
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
+const swaggerSpec = swaggerJSDoc(swaggerOpts);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (err.name === 'UnauthorizedError') {
-        res.status(401).json({ status: 'unauthorized', message: err.message });
-    } else if (err.name === 'CoursesError') {
-        res.status(400).json({ status: 'domain error', message: err.message });
-    } else {
-        res.status(400).json({ status: 'application error', message: err.message });
+        res.status(401).json({ status: 'Unauthorized', message: err.message })
     }
 });
 
-
-app.listen(port, () => {
-    console.log(`Back-end is running on port ${port}.`);
+app.listen(port || 3000, () => {
+    console.log('PlanArts API is running...');
 });

@@ -10,7 +10,6 @@ const Home: React.FC = () => {
                 {/*<link rel="icon" href="/favicon.ico" />*/}
             </Head>
             <Header></Header>
-            <h1>HALLO DIT IS PLANARTS</h1>
         </>
     )
 }
