@@ -1,21 +1,35 @@
 import React from 'react';
 import Link from 'next/link';
+import Logo from "/public/images/PlanArtsLogo.png";
+import Button from "react-bootstrap/Button";
+import { useRouter } from 'next/router';
+import { Navbar, Container, Nav } from 'react-bootstrap';
+import Language from "@components/language/Language";
+import { useTranslation } from "next-i18next";
 
 const Header: React.FC = () => {
+  const { t } = useTranslation();
   return (
-    <header className="bg-green-500 p-4 shadow-md">
-      <nav className="flex justify-between items-center">
-        <div className="text-lg font-bold text-white">MyApp</div>
-        <div className="space-x-4" >
-          <Link href="/register" className="text-blue-500 hover:text-blue-700 bg-white px-3 py-2 rounded">
-            Register now!
-          </Link>
-          <Link href="/login" className='text-blue-500 hover:text-blue-700 bg-white px-3 py-2 rounded'>
-            Login {/*Still needs to be fixed */}
-          </Link>
-        </div>
-      </nav>
-    </header>
+    <Navbar bg="dark" data-bs-theme="dark">
+        <Container>
+        <Navbar.Brand href="/">
+            <img
+              src={Logo.src}
+              width="50"
+              height="50"
+              className="d-inline-block align-top"
+              alt="PlanArts Logo"
+            />
+          </Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/practices">Practices</Nav.Link>
+            <Nav.Link href="/register">Register</Nav.Link>
+            <Nav.Link href="/login">LogIn</Nav.Link>
+            <Language></Language>
+          </Nav>
+        </Container>
+      </Navbar>
   );
 };
 

@@ -1,6 +1,7 @@
 import Header from "@components/header";
 import React, { useState } from "react";
 import UserService from "../../services/UserService"; // Adjust the import path as necessary
+import Footer from "@components/footer";
 
 const RegisterPage: React.FC = () => {
     const [userEmail, setUserEmail] = useState("");
@@ -60,12 +61,13 @@ const RegisterPage: React.FC = () => {
                         <input
                             type="submit"
                             value="Register"
-                            className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+                            className="w-full bg-blue-500 text-black py-2 rounded hover:bg-blue-600"
                         />
                     </div>
                     {error && <p className="text-center">{error}</p>}
                 </form>
             </div>
+            <Footer></Footer>
         </>
     );
 };
