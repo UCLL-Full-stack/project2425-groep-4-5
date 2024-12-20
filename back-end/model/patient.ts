@@ -3,8 +3,6 @@ import { Appointment } from "./appointment";
 import { MedicalInfo } from "./medicalInfo";
 import { User } from "./user";
 import { User as UserPrisma, Appointment as AppointmentPrisma, MedicalInfo as MedicalInfoPrisma, PrismaClient, Prisma } from "@prisma/client"
-import database from "../repository/database";
-
 
 export class Patient {
     private id: number;

@@ -1,7 +1,7 @@
 import { Clinic } from "./clinic";
 import { User } from "./user";
 import { Prisma, PrismaClient, Doctor as DoctorPrisma, User as UserPrisma, Clinic as ClinicPrisma } from "@prisma/client";
-import database from "../repository/database";
+
 export class Doctor {
     private id: number;
     private user: User;

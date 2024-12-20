@@ -1,6 +1,6 @@
 import { User } from "./user";
 import { Prisma, PrismaClient, Admin as AdminPrisma, User as UserPrisma } from "@prisma/client";
-import database from "../repository/database";
+
 export class Admin {
     private id: number;
     private user: User;

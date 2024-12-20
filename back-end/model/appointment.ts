@@ -5,7 +5,7 @@ import { Patient as PatientPrisma, PrismaClient } from "@prisma/client";
 import { Doctor as DoctorPrisma } from "@prisma/client";
 import { Clinic as ClinicPrisma } from "@prisma/client";
 import { Appointment as AppointmentPrisma } from "@prisma/client";
-import database from "../repository/database";
+
 export class Appointment {
     private id: number;
     private date: Date;
@@ -82,12 +82,12 @@ export class Appointment {
         patient,
         doctor,
         clinic,
-    }: AppointmentPrisma & { patient: PatientPrisma; doctor: DoctorPrisma; clinic: ClinicPrisma; }) {
+    }: AppointmentPrisma & { doctor: DoctorPrisma; clinic: ClinicPrisma; }) {
         return new Appointment({
             id,
             date,
             time,
-            patient: Patient.from(patient),
+            patient,
             doctor: Doctor.from(doctor),
             clinic: Clinic.from(clinic),
         });
