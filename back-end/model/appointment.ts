@@ -11,6 +11,8 @@ export class Appointment {
     private clinic: Clinic;
 
     constructor(appointment: { id?: number; date: Date; time: string; patient: Patient; doctor: Doctor; clinic: Clinic; }) {
+        this.validate(appointment);
+
         this.id = appointment.id;
         this.date = appointment.date;
         this.time = appointment.time;
@@ -49,5 +51,29 @@ export class Appointment {
             && this.patient.equals(appointment.patient)
             && this.doctor.equals(appointment.doctor)
             && this.clinic.equals(appointment.clinic)
+    }
+
+    validate(appointment: { id?: number; date: Date; time: string; patient: Patient; doctor: Doctor; clinic: Clinic; }) {
+        if (appointment.date == null) {
+            throw new Error("Date is required!");
+        }
+        if (appointment.time.trim() == null) {
+            throw new Error("Time is required!");
+        }
+        if (appointment.patient == null) {
+            throw new Error("Patient is required!");
+        }
+        if (appointment.doctor == null) {
+            throw new Error("Doctor is required!");
+        }
+        if (appointment.clinic == null) {
+            throw new Error("Clinic is required!");
+        }
+    }
+
+    static from(
+
+    ) {
+
     }
 }
