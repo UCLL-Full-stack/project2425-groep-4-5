@@ -1,8 +1,9 @@
 import Header from "@components/header";
 import React, { useState } from "react";
-import UserService from "../../services/UserService"; // Adjust the import path as necessary
 import Footer from "@components/footer";
 import UserRegistrationForm from "@components/users/UserRegistrationForm";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSidePropsContext } from "next";
 
 const RegisterPage: React.FC = () => {
     return (
@@ -15,3 +16,13 @@ const RegisterPage: React.FC = () => {
 };
 
 export default RegisterPage;
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+    const { locale } = context;
+
+    return {
+        props: {
+            ...(await serverSideTranslations(locale ?? "en", ["common"])),
+        },
+    }
+}

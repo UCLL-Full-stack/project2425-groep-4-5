@@ -1,9 +1,8 @@
 import { Col, Container, Nav, NavLink, Row, Stack } from "react-bootstrap";
 import Logo from "/public/images/PlanArtsLogo.png";
-import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
+import { useTranslation } from "next-i18next";
 
-function Footer () {
+function Footer() {
     const { t } = useTranslation();
     return (
         <footer>
@@ -11,7 +10,7 @@ function Footer () {
                 <Row className="bg-dark text-white fixed-bottom">
                     <Col>
                         <Stack>
-                            <img src= {Logo.src} alt="PlanArts Logo" width={150} height={150} />
+                            <img src={Logo.src} alt="PlanArts Logo" width={150} height={150} />
                         </Stack>
                     </Col>
                     <Col>

@@ -27,7 +27,7 @@ const createAccount = async (email: string, password: string) => {
 };
 
 const loginUser = (user: User) => {
-    return fetch (process.env.NEXT_PUBLIC_API_URL + "/users/login", {
+    return fetch(process.env.NEXT_PUBLIC_API_URL + "/users/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -35,21 +35,6 @@ const loginUser = (user: User) => {
         body: JSON.stringify(user)
     })
 };
-
-const authenticate = async ({email, password}: UserInput): Promise<AuthenticatorResponse> => {
-    const user = await getUserByEmail({email});
-
-    const isValidPassword = await bcrypt.compare(password, user.password);
-
-    if (!isValidPassword) {
-        throw new Error("Invalid password");
-    }
-    return {
-        token: generateJWTToken({email, role: user.role}),
-        email: email,
-        role: user.role
-    }
-}
 
 const UserService = {
     createAccount,

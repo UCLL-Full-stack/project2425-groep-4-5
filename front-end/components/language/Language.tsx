@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
-import { useTranslation } from "react-i18next";
-import { GetServerSidePropsContext } from "next";
+import { useTranslation } from "next-i18next";
 
 const Language: React.FC = () => {
   const { t } = useTranslation();
@@ -9,7 +8,7 @@ const Language: React.FC = () => {
 
   const handleLanguageChange = (event: { target: { value: string } }) => {
     const newLocale = event.target.value;
-    const {pathname, query, asPath} = router
+    const { pathname, query, asPath } = router
     router.push({ pathname, query }, asPath, { locale: newLocale });
   };
 

@@ -1,38 +1,35 @@
-import React from 'react';
-import Link from 'next/link';
 import Logo from "/public/images/PlanArtsLogo.png";
-import Button from "react-bootstrap/Button";
-import { useRouter } from 'next/router';
-import { Navbar, Container, Nav } from 'react-bootstrap';
-import Language from "@components/language/Language";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import {useTranslation} from "next-i18next";
-import { GetServerSidePropsContext } from "next";
+import { useTranslation } from "next-i18next";
+import Language from "./language/Language";
 
-const Header: React.FC = () => {
+function Navbar() {
   const { t } = useTranslation();
+
   return (
-    <Navbar bg="dark" data-bs-theme="dark">
-        <Container>
-        <Navbar.Brand href="/">
+    <nav className="bg-dark text-white shadow-md">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div className="flex items-center">
+          <a href="/" className="flex items-center">
             <img
               src={Logo.src}
               width="50"
               height="50"
-              className="d-inline-block align-top"
+              className="inline-block align-top"
               alt="PlanArts Logo"
             />
-          </Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="/">{t('header.home')}</Nav.Link>
-            <Nav.Link href="/practices">{t('header.practices')}</Nav.Link>
-            <Nav.Link href="/register">{t('header.register')}</Nav.Link>
-            <Nav.Link href="/login">{t('header.login')}</Nav.Link>
-            <Language></Language>
-          </Nav>
-        </Container>
-      </Navbar>
-  );
-};
+          </a>
+        </div>
 
-export default Header;
+        <div className="flex space-x-6">
+          <a href="/" className="text-white hover:text-gray-300">{t('header.home')}</a>
+          <a href="/practices" className="text-white hover:text-gray-300">{t('header.practices')}</a>
+          <a href="/register" className="text-white hover:text-gray-300">{t('header.register')}</a>
+          <a href="/login" className="text-white hover:text-gray-300">{t('header.login')}</a>
+          <Language />
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+export default Navbar;

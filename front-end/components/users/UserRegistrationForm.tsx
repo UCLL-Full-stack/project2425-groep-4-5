@@ -1,12 +1,11 @@
 import React from "react";
 import { Container, Row, Card, CardBody, Col, Button, Form } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
-import { GetServerSidePropsContext } from "next";
+import { useTranslation } from "next-i18next";
 
 const UserLoginForm: React.FC = () => {
   const { t } = useTranslation();
-    return (
-        <Container fluid>
+  return (
+    <Container fluid>
 
       <Row className='justify-content-center align-items-center m-5'>
 
@@ -65,7 +64,7 @@ const UserLoginForm: React.FC = () => {
               </Col>
             </Row>
             <Row>
-            <Col md='6'>
+              <Col md='6'>
                 <h4>Repeat Password</h4>
                 <input type="password" className="form-control" id="inputPasswordRepeat" placeholder="Repeat Password"></input>
               </Col>
@@ -77,7 +76,7 @@ const UserLoginForm: React.FC = () => {
 
       </Row>
     </Container>
-    )
+  )
 };
 
 export default UserLoginForm;
