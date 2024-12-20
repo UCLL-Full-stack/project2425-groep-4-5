@@ -10,50 +10,41 @@ export class Patient {
     private patientAppointments: Appointment[];
     private medicalInfo?: MedicalInfo;
 
-    constructor(patient: { birthDate: Date; }) {
-        this.id = patient.birthDate;
+    constructor(patient: { id: number; user: User; birthDate: Date; patientAppointments: Appointment[]; medicalInfo?: MedicalInfo }) {
+        this.id = patient.id;
+        this.user = patient.user;
         this.birthDate = patient.birthDate;
         this.patientAppointments = patient.patientAppointments;
         this.medicalInfo = patient.medicalInfo;
     }
 
     getUserId(): number | undefined {
-        return this.userId;
+        return this.id;
     }
 
-    getName(): string {
-        return this.name
-    }
-
-    getEmail(): string {
-        return this.email;
-    }
-
-    getPassword(): string {
-        return this.password;
-    }
-
-    getRole(): Role {
-        return this.role;
+    getUser(): User {
+        return this.user
     }
 
     getBirthDate(): Date {
         return this.birthDate;
     }
 
-    /*getPatientAppointments(): Appointment[] {
+    getPatientAppointments(): Appointment[] {
         return this.patientAppointments;
+
     }
 
     getMedicalInfo(): MedicalInfo | undefined {
         return this.medicalInfo;
-    }*/
+    }
 
     equals(patient: Patient): boolean {
-        return this.name === patient.name
-            && this.email === patient.email
+        return (this.id === patient.id
+            && this.user === patient.user
             && this.birthDate === patient.birthDate
-        //&& this.patientAppointments === patient.patientAppointments
-        //&& this.medicalInfo === patient.medicalInfo
+            && this.patientAppointments === patient.patientAppointments
+            && this.medicalInfo === patient.medicalInfo
+        );
     }
 }

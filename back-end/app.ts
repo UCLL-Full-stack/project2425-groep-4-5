@@ -4,58 +4,38 @@ import cors from 'cors';
 import * as bodyParser from 'body-parser';
 import swaggerJSDoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
-import { doctorRouter } from './controller/doctor.routes';
-import patientRouter from './controller/patients.routes';
+import { expressjwt } from 'express-jwt';
 import appointmentRouter from './controller/appointment.routes';
+import doctorRouter from './controller/doctor.routes';
+import patientRouter from './controller/patients.routes';
 
 const app = express();
 dotenv.config();
 const port = process.env.APP_PORT || 3000;
-
-
 app.use(cors({ origin: 'http://localhost:8080' }));
-
-
 app.use(bodyParser.json());
 
-
-app.use('/patients', patientRouter);
 app.use('/appointments', appointmentRouter);
-app.use('/doctors', doctorRouter);
-
+app.use('/doctor', doctorRouter);
+app.use('/patients', patientRouter);
 
 app.get('/status', (req, res) => {
-    res.json({ message: 'Back-end is running...' });
+    res.json({ message: 'Courses API is running...' });
 });
 
 const swaggerOpts = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Healthcare API',
+            title: 'Courses API',
             version: '1.0.0',
-            description: 'API documentation for the Healthcare management system',
-            contact: {
-                name: 'Your Name',
-                email: 'your-email@example.com',
-            },
         },
-        servers: [
-            {
-                url: 'http://localhost:3000',
-            },
-        ],
     },
     apis: ['./controller/*.routes.ts'],
 };
 
-
-const swaggerDocs = swaggerJSDoc(swaggerOpts);
-
-
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-
+const swaggerSpec = swaggerJSDoc(swaggerOpts);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     if (err.name === 'UnauthorizedError') {
         res.status(401).json({ status: 'unauthorized', message: err.message });
@@ -65,8 +45,12 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
         res.status(400).json({ status: 'application error', message: err.message });
     }
 });
-
-
-app.listen(port, () => {
-    console.log(`Back-end is running on port ${port}.`);
+app.listen(port || 3000, () => {
+    console.log(`Courses API is running on port ${port}.`);
 });
+app.use(
+    expressjwt({
+        secret: process.env.JWT_SECRET || 'default_secret',
+        algorithms: ['HS256'],
+    })
+);

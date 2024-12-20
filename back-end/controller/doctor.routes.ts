@@ -122,4 +122,4 @@ doctorRouter.get('/', async (req: Request, res: Response, next: NextFunction) =>
     }
 });
 
-export { doctorRouter };
+export default doctorRouter;
