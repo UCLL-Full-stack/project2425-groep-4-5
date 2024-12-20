@@ -1,5 +1,8 @@
 import { Clinic } from "./clinic";
 import { User } from "./user";
+import { Prisma, PrismaClient, Doctor as DoctorPrisma, User as UserPrisma, Clinic as ClinicPrisma } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export class Doctor {
     private id: number;
@@ -44,4 +47,23 @@ export class Doctor {
             && this.clinic.equals(doctor.clinic)
         );
     }
+
+    static from({
+        id,
+        user,
+        specialisation,
+        
+        clinic,
+    }: DoctorPrisma & { user: UserPrisma; clinic: ClinicPrisma; }) {
+        return new Doctor({
+            id,
+            user: User.from(user),
+            specialisation,
+            
+            clinic: Clinic.from(clinic),
+    }
+        );
+        
+    }
+
 }
