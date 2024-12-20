@@ -34,7 +34,7 @@ const getPatientByEmail = (email: string): Patient | undefined => {
 };
 
 const convertToPatient = (patientInput: PatientInput): Patient => {
-    if (!patientInput.user?.name || !patientInput.user?.email) {
+    if (!patientInput.user?.name || !patientInput.user?.email || !patientInput.birthDate) {
         throw new Error("Invalid patient input: Name and email are required.");
     }
     return new Patient({
