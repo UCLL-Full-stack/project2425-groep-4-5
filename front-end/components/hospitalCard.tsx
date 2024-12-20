@@ -1,24 +1,25 @@
-import { Card, ListGroup } from "react-bootstrap";
+import React from 'react';
 
-function hospitalCard() {
-    return (
-        <Card style={{ width: '18rem' }}>
-          <Card.Body>
-            <Card.Title>Huisarts Leuven</Card.Title>
-            <Card.Text>
-              Gezellige huisarts in Leuven op de Oude Markt.
-            </Card.Text>
-          </Card.Body>
-          <ListGroup className="list-group-flush">
-            <ListGroup.Item>Tel: 123 45 67</ListGroup.Item>
-            <ListGroup.Item>Email: 1oG8F@example.com</ListGroup.Item>
-            <ListGroup.Item>Oude Markt 12</ListGroup.Item>
-          </ListGroup>
-          <Card.Body>
-            <Card.Link href="#">Bekijk praktijk</Card.Link>
-            <Card.Link href="#">Plan een afspraak</Card.Link>
-          </Card.Body>
-        </Card>
-      );
-}
-export default hospitalCard
+const HuisartsLeuvenCard: React.FC = () => {
+  return (
+    <div className="max-w-sm rounded overflow-hidden shadow-lg bg-white">
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2">Huisarts Leuven</div>
+        <p className="text-gray-700 text-base">
+          Gezellige huisarts in Leuven op de Oude Markt.
+        </p>
+      </div>
+      <ul className="px-6 py-4">
+        <li className="text-gray-600 mb-2">Tel: 123 45 67</li>
+        <li className="text-gray-600 mb-2">Email: 1oG8F@example.com</li>
+        <li className="text-gray-600 mb-2">Oude Markt 12</li>
+      </ul>
+      <div className="px-6 py-4 flex justify-between">
+        <a href="#" className="text-blue-500 hover:text-blue-700">Bekijk praktijk</a>
+        <a href="#" className="text-blue-500 hover:text-blue-700">Plan een afspraak</a>
+      </div>
+    </div>
+  );
+};
+
+export default HuisartsLeuvenCard;

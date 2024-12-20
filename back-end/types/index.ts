@@ -1,5 +1,11 @@
 type Role = 'admin' | 'patient' | 'doctor';
 
+type AuthenticationResponse = {
+    email?: string,
+    role?: Role,
+    token: string
+}
+
 type UserInput = {
     id?: number,
     name?: string,
@@ -59,6 +65,7 @@ type AdminInput = {
 }
 
 export { Role };
+export { AuthenticationResponse };
 export { UserInput };
 export { PatientInput };
 export { MedicalInfoInput };

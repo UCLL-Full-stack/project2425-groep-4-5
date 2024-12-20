@@ -1,8 +1,6 @@
 import Footer from "@components/footer";
 import Header from "@components/header";
-import UserRegistrationForm from "@components/users/UserRegistrationForm";
 import React, { useState } from "react";
-import { Nav } from "react-bootstrap";
 import UserService from "../../services/UserService";
 import { StatusMessage } from "@types";
 import { useRouter } from "next/router";

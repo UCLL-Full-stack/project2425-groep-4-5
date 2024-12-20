@@ -8,18 +8,18 @@ const Language: React.FC = () => {
 
   const handleLanguageChange = (event: { target: { value: string } }) => {
     const newLocale = event.target.value;
-    const { pathname, query, asPath } = router
+    const { pathname, query, asPath } = router;
     router.push({ pathname, query }, asPath, { locale: newLocale });
   };
 
   return (
-    <div className="ml-6">
-      <label htmlFor="language" className="text-white back">
-        Language
+    <div className="ml-6 flex items-center space-x-2">
+      <label htmlFor="language" className="text-white font-semibold text-sm">
+        {t('language')}
       </label>
       <select
         id="language"
-        className="ml-2 p-1 text-white"
+        className="p-2 bg-gray-800 text-white rounded-md border border-gray-600 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-colors duration-200"
         value={locale}
         onChange={handleLanguageChange}
       >
