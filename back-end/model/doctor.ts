@@ -58,7 +58,7 @@ export class Doctor {
             user: User.from(user),
             specialisation,
             description: undefined,
-            clinic: Clinic.from(clinic),
+            clinic: Clinic.from(clinic as any),
         }
         );
 

@@ -74,7 +74,7 @@ export class Clinic {
             email,
             description: description ?? undefined,
             openingHours,
-            doctors: doctors.map((doctor: DoctorPrisma): Doctor => Doctor.from(doctor)),
+            doctors: doctors.map((doctor: DoctorPrisma): Doctor => Doctor.from(doctor as any)),
         },);
     }
 }
