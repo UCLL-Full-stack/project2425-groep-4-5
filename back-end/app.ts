@@ -8,26 +8,44 @@ import { expressjwt } from 'express-jwt';
 import appointmentRouter from './controller/appointment.routes';
 import doctorRouter from './controller/doctor.routes';
 import patientRouter from './controller/patients.routes';
+import helmet from 'helmet';
 
 const app = express();
+app.use(helmet());
+
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            connectSrc: ["'self'", 'https://api.ucll.be'],
+        },
+    })
+);
+
 dotenv.config();
 const port = process.env.APP_PORT || 3000;
 app.use(cors({ origin: 'http://localhost:8080' }));
 app.use(bodyParser.json());
-
+app.use(
+    expressjwt({
+        secret: process.env.JWT_SECRET || 'default_secret',
+        algorithms: ['HS256'],
+    }).unless({
+        path: ['/api-docs', /^\/api-docs\/.*/, '/users/login', '/users/signup', '/status']
+    })
+);
 app.use('/appointments', appointmentRouter);
 app.use('/doctor', doctorRouter);
 app.use('/patients', patientRouter);
 
 app.get('/status', (req, res) => {
-    res.json({ message: 'Courses API is running...' });
+    res.json({ message: 'PlanArts API is running...' });
 });
 
 const swaggerOpts = {
     definition: {
         openapi: '3.0.0',
         info: {
-            title: 'Courses API',
+            title: 'PlanArts API',
             version: '1.0.0',
         },
     },
@@ -46,11 +64,5 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     }
 });
 app.listen(port || 3000, () => {
-    console.log(`Courses API is running on port ${port}.`);
+    console.log(`PlanArts API is running on port ${port}.`);
 });
-app.use(
-    expressjwt({
-        secret: process.env.JWT_SECRET || 'default_secret',
-        algorithms: ['HS256'],
-    })
-);
