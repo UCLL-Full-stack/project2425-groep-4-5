@@ -1,0 +1,91 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  user
+  admin
+  doctor
+}
+
+model Admin {
+  id     Int   @id @default(autoincrement())
+  user   User  @relation(fields: [userId], references: [id], map: "Admin_User_fk")
+  userId Int   @unique
+}
+
+model Appointment {
+  id        Int       @id @default(autoincrement())
+  date      DateTime
+  time      String
+  patient   Patient   @relation(fields: [patientId], references: [id], map: "Appointment_Patient_fk")
+  patientId Int
+  doctor    Doctor    @relation(fields: [doctorId], references: [id], map: "Appointment_Doctor_fk")
+  doctorId  Int
+  clinic    Clinic    @relation(fields: [clinicId], references: [id], map: "Appointment_Clinic_fk")
+  clinicId  Int
+}
+
+model Clinic {
+  id           Int       @id @default(autoincrement())
+  name         String
+  address      String
+  phone        String
+  email        String
+  description  String?
+  openingHours String
+  doctors      Doctor[]
+  patients     Appointment[]
+}
+
+model Doctor {
+  id             Int           @id @default(autoincrement())
+  user           User          @relation(fields: [userId], references: [id], map: "Doctor_User_fk")
+  userId         Int           @unique
+  specialisation String
+  description    String?
+  clinic         Clinic        @relation(fields: [clinicId], references: [id], map: "Doctor_Clinic_fk")
+  clinicId       Int
+  appointments   Appointment[]
+}
+
+model MedicalInfo {
+  id                 Int      @id @default(autoincrement())
+  bloodType          String
+  allergies          String[]
+  currentMedications String[]
+  patient            Patient  @relation(fields: [patientId], references: [id], map: "MedicalInfo_Patient_fk")
+  patientId          Int      @unique
+}
+
+model Patient {
+  id                   Int           @id @default(autoincrement())
+  user                 User          @relation(fields: [userId], references: [id], map: "Patient_User_fk")
+  userId               Int           @unique
+  birthDate            DateTime
+  patientAppointments  Appointment[]
+  medicalInfo          MedicalInfo?  @relation(map: "Patient_MedicalInfo_fk")
+}
+
+model Profile {
+  id             Int     @id @default(autoincrement())
+  medicalHistory String?
+  age            Int
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  name     String
+  email    String
+  password String
+  role     Role    @default(user)
+  roleId   Int
+  admin    Admin?  @relation(map: "User_Admin_fk")
+  doctor   Doctor?
+  patient  Patient?
+}
