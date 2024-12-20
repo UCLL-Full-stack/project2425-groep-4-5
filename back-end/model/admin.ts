@@ -19,8 +19,11 @@ export class Admin {
         return this.user;
     }
 
-    equals(): boolean {
-        return true;
+    equals(admin: Admin): boolean {
+        return (
+            this.id === admin.id
+            && this.user === admin.user
+        );
     }
 
     validate(admin: { id?: number; user: User }) {

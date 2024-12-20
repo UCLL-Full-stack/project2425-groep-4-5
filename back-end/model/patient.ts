@@ -3,22 +3,18 @@ import { Appointment } from "./appointment";
 import { MedicalInfo } from "./medicalInfo";
 import { User } from "./user";
 
-export class Patient extends User {
+export class Patient {
+    private id: number;
+    private user: User;
     private birthDate: Date;
-    //private patientAppointments: Appointment[];
-    //private medicalInfo?: MedicalInfo;
+    private patientAppointments: Appointment[];
+    private medicalInfo?: MedicalInfo;
 
-    constructor(patient: { userId?: number; name: string; email: string; password: string; role: Role; birthDate: Date; }) {
-        super({
-            userId: patient.userId,
-            name: patient.name,
-            email: patient.email,
-            password: patient.password
-        })
-        this.role = "patient"
+    constructor(patient: { birthDate: Date; }) {
+        this.id = patient.birthDate;
         this.birthDate = patient.birthDate;
-        //this.patientAppointments = patient.patientAppointments;
-        //this.medicalInfo = patient.medicalInfo;
+        this.patientAppointments = patient.patientAppointments;
+        this.medicalInfo = patient.medicalInfo;
     }
 
     getUserId(): number | undefined {
