@@ -1,3 +1,31 @@
 {
-    "app.title": "Welkom bij PlanArts"
-    }
+    "app.title": "Welkom bij PlanArts",
+    "general.error": "Er ging iets mis",
+    
+        "header.home": "Start",
+        "header.practices": "Praktijken",
+        "header.register": "Registreren",
+        "header.login": "Inloggen",
+        "header.language": "Taal",
+        "header.english": "Engels",
+        "header.dutch": "Nederlands",
+    
+    
+        "footer.contact": "Neem contact op!",
+        "footer.link": "Links",
+    
+        "register.title": "Registratieformulier",
+        "register.firstName": "Voornaam",
+        "register.lastName": "Achternaam",
+        "register.birthDate": "Geboortedatum",
+        "register.gender": "Geslacht",
+        "register.male": "Man",
+        "register.female": "Vrouw",
+        "register.other": "Anders",
+        "register.email": "Email",
+        "register.phone": "Telefoonnummer",
+        "register.password": "Wachtwoord",
+        "register.confirmPassword": "Wachtwoord bevestigen",
+        "register.register": "Registreren"
+    
+}

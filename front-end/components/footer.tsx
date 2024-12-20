@@ -1,8 +1,10 @@
 import { Col, Container, Nav, NavLink, Row, Stack } from "react-bootstrap";
 import Logo from "/public/images/PlanArtsLogo.png";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function Footer () {
+    const { t } = useTranslation();
     return (
         <footer>
             <Container fluid>
@@ -14,16 +16,16 @@ function Footer () {
                     </Col>
                     <Col>
                         <Nav className="flex-column fs-5">
-                            <h4>Links ⬇️</h4>
-                            <NavLink className="text-white" href="/">Home</NavLink>
-                            <NavLink className="text-white" href="/practices">Practices</NavLink>
-                            <NavLink className="text-white" href="/register">Register</NavLink>
-                            <NavLink className="text-white" href="/login">Login</NavLink>
+                            <h4>{t('footer.link')}</h4>
+                            <NavLink className="text-white" href="/">{t('header.home')}</NavLink>
+                            <NavLink className="text-white" href="/practices">{t('header.practices')}</NavLink>
+                            <NavLink className="text-white" href="/register">{t('header.register')}</NavLink>
+                            <NavLink className="text-white" href="/login">{t('header.login')}</NavLink>
                         </Nav>
 
                     </Col>
                     <Col>
-                        <h4>Contact us!</h4>
+                        <h4>{t('footer.contact')}</h4>
                         <p>+32 123 45 67</p>
                         <p>BvWw7@example.com</p>
                     </Col>

@@ -13,7 +13,7 @@ const Home: React.FC = () => {
             <Head>
                 <meta name="description" content="PlanArts" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                {/*<link rel="icon" href="/favicon.ico" />*/}
+                {/* {<link rel="icon" href="/front-end/public/images/PlanArtsLogo.png" />} */}
             </Head>
             <Header></Header>
             <h1 className='text-center'>{t('app.title')}</h1>
