@@ -85,15 +85,5 @@ const patientRouter = Router();
  *         description: Invalid input, missing required fields.
  */
 
-patientRouter.post('/add', async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const newPatient = <PatientInput>req.body;
-        const result = await PatientService.registerPatient(newPatient);
-        res.status(200).json(result);
-    }
-    catch (error) {
-        res.status(500).json(error)
-    }
-});
 
 export default patientRouter;
