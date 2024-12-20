@@ -1,6 +1,9 @@
 import { Role } from "../types/index";
 
 export class User {
+    static from(user: any): User {
+        throw new Error("Method not implemented.");
+    }
     protected id: number;
     protected name: string;
     protected email: string;

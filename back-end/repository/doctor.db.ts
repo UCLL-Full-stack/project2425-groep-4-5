@@ -1,6 +1,7 @@
 import { Doctor } from "../model/doctor";
 import { Clinic } from "../model/clinic";
 import { User } from "../model/user";
+import database from "./database";
 
 const clinic1 = new Clinic({
     id: 1,
@@ -53,8 +54,14 @@ const doctors = [
 ];
 
 
-const getAllDoctors = (): Doctor[] => {
-    return doctors;
+const getAllDoctors = async (): Promise<Doctor[]> => {
+    const doctorsPrisma = await database.doctor.findMany({
+        include: {
+            user: true,
+            clinic: true
+        }
+    });
+    return doctorsPrisma.map((doctorPrisma) => Doctor.from(doctorPrisma));
 };
 
 

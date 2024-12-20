@@ -1,6 +1,9 @@
 import { Doctor } from "./doctor";
 
 export class Clinic {
+    static from(clinic: any): Clinic {
+        throw new Error("Method not implemented.");
+    }
     private id: number
     private name: string
     private address: string
