@@ -7,7 +7,7 @@ import swaggerUi from 'swagger-ui-express';
 import { expressjwt } from 'express-jwt';
 import appointmentRouter from './controller/appointment.routes';
 import doctorRouter from './controller/doctor.routes';
-import patientRouter from './controller/patients.routes';
+import patientRouter from './controller/patient.routes';
 import helmet from 'helmet';
 
 const app = express();

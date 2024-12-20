@@ -8,11 +8,13 @@ userRouter.get('/all', (req: Request, res: Response, next: NextFunction) => {
 });
 
 userRouter.post('/register', (req: Request, res: Response, next: NextFunction) => {
-    userService.addUser();
+    const newUser = req.body;
+    userService.addUser(newUser);
 });
 
 userRouter.post('/login', (req: Request, res: Response, next: NextFunction) => {
-    userService.loginUser();
+    const attemptedUser = req.body;
+    userService.loginUser(attemptedUser);
 });
 
 export default userRouter;

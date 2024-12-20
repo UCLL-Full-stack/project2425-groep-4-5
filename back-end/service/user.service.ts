@@ -1,6 +1,7 @@
+import userDB from "../repository/user.db";
 import { UserInput } from "../types";
 
-const getAllUsers = (user: UserInput) => {
+const getAllUsers = () => {
 
 }
 
