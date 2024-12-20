@@ -1,4 +1,3 @@
-import { Role } from "../types";
 import { Clinic } from "./clinic";
 import { User } from "./user";
 

@@ -3,14 +3,14 @@ import { Clinic } from "./clinic";
 import { Doctor } from "./doctor";
 
 export class Appointment {
-    private id?: number;
+    private id: number;
     private date: Date;
     private time: string;
     private patient: Patient;
     private doctor: Doctor;
     private clinic: Clinic;
 
-    constructor(appointment: { id?: number; date: Date; time: string; patient: Patient; doctor: Doctor; clinic: Clinic; }) {
+    constructor(appointment: { id: number; date: Date; time: string; patient: Patient; doctor: Doctor; clinic: Clinic; }) {
         this.validate(appointment);
 
         this.id = appointment.id;

@@ -27,18 +27,25 @@ const clinic2 = new Clinic({
 const doctors = [
     new Doctor({
         id: 1,
-        name: "Doctor1",
-        email: "doctor1@example.com",
-        password: "doctor1password",
+        user: new User({
+            id: 1,
+            name: "Doctor1",
+            email: "doctor1@example.com",
+            password: "doctor1password"
+        }),
         specialisation: "Cardiology",
         description: "Experienced cardiologist.",
         clinic: clinic1
     }),
+
     new Doctor({
         id: 2,
-        name: "Doctor2",
-        email: "doctor2@example.com",
-        password: "doctor2password",
+        user: new User({
+            id: 2,
+            name: "Doctor2",
+            email: "doctor2@example.com",
+            password: "doctor2password"
+        }),
         specialisation: "Neurology",
         description: "Experienced neurologist.",
         clinic: clinic2

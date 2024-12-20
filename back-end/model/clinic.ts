@@ -1,16 +1,16 @@
 import { Doctor } from "./doctor";
 
 export class Clinic {
-    private id?: number
+    private id: number
     private name: string
     private address: string
     private phone: string
     private email: string
     private description?: string
     private openingHours: string
-    private doctors: Doctor [] = [];
+    private doctors: Doctor[] = [];
 
-    constructor(clinic: { id?: number; name: string; address: string; phone: string; email: string; description?: string; openingHours: string; doctors: Doctor[]; }) {
+    constructor(clinic: { id: number; name: string; address: string; phone: string; email: string; description?: string; openingHours: string; doctors: Doctor[]; }) {
         this.id = clinic.id;
         this.name = clinic.name;
         this.address = clinic.address;
