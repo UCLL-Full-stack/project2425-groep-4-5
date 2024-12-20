@@ -1,7 +1,10 @@
 import React from "react";
 import { Container, Row, Card, CardBody, Col, Button, Form } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
+import { GetServerSidePropsContext } from "next";
 
 const UserLoginForm: React.FC = () => {
+  const { t } = useTranslation();
     return (
         <Container fluid>
 
@@ -67,7 +70,7 @@ const UserLoginForm: React.FC = () => {
                 <input type="password" className="form-control" id="inputPasswordRepeat" placeholder="Repeat Password"></input>
               </Col>
             </Row>
-            <Button className='mb-4' size='lg'>Submit</Button>
+            <Button className='mb-4' size='lg'>Register</Button>
 
           </CardBody>
         </Card>

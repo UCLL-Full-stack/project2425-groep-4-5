@@ -1,6 +1,9 @@
 import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
+import { GetServerSidePropsContext } from "next";
 
 const Language: React.FC = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const { locale, pathname, asPath, query } = router;
 
@@ -22,7 +25,7 @@ const Language: React.FC = () => {
         onChange={handleLanguageChange}
       >
         <option value="en">English</option>
-        <option value="nl">Nederlands</option>
+        <option value="nl">Dutch</option>
       </select>
     </div>
   );

@@ -1,3 +1,32 @@
 {
-    "app.title": "Welcome to PlanArts"
-    }
+    "app.title": "Welcome to PlanArts",
+    "general.error": "Something went wrong",
+    
+        "header.home": "Home",
+        "header.practices": "Practices",
+        "header.register": "Register",
+        "header.login": "Login",
+        "header.language": "Language",
+        "header.english": "English",
+        "header.dutch": "Dutch",
+    
+    
+        "footer.contact": "Contact us!",
+        "footer.link": "Links",
+    
+    
+        "register.title": "Registration form",
+        "register.firstName": "First Name",
+        "register.lastName": "Last Name",
+        "register.birthDate": "Birth Date",
+        "register.gender": "Gender",
+        "register.male": "Male",
+        "register.female": "Female",
+        "register.other": "Other",
+        "register.email": "Email",
+        "register.phone": "Phone number",
+        "register.password": "Password",
+        "register.confirmPassword": "Confirm Password",
+        "register.register": "Register"
+    
+}

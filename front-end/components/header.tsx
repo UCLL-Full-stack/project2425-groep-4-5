@@ -5,7 +5,9 @@ import Button from "react-bootstrap/Button";
 import { useRouter } from 'next/router';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import Language from "@components/language/Language";
-import { useTranslation } from "next-i18next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {useTranslation} from "next-i18next";
+import { GetServerSidePropsContext } from "next";
 
 const Header: React.FC = () => {
   const { t } = useTranslation();
@@ -22,10 +24,10 @@ const Header: React.FC = () => {
             />
           </Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/practices">Practices</Nav.Link>
-            <Nav.Link href="/register">Register</Nav.Link>
-            <Nav.Link href="/login">LogIn</Nav.Link>
+            <Nav.Link href="/">{t('header.home')}</Nav.Link>
+            <Nav.Link href="/practices">{t('header.practices')}</Nav.Link>
+            <Nav.Link href="/register">{t('header.register')}</Nav.Link>
+            <Nav.Link href="/login">{t('header.login')}</Nav.Link>
             <Language></Language>
           </Nav>
         </Container>
