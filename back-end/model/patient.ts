@@ -2,9 +2,8 @@ import { Role } from "../types";
 import { Appointment } from "./appointment";
 import { MedicalInfo } from "./medicalInfo";
 import { User } from "./user";
-import {User as UserPrisma, Appointment as AppointmentPrisma, MedicalInfo as MedicalInfoPrisma, PrismaClient, Prisma} from "@prisma/client"
-
-const prisma = new PrismaClient();
+import { User as UserPrisma, Appointment as AppointmentPrisma, MedicalInfo as MedicalInfoPrisma, PrismaClient, Prisma } from "@prisma/client"
+import database from "../repository/database";
 
 
 export class Patient {
@@ -52,7 +51,7 @@ export class Patient {
         );
     }
 
-    static from ({
+    static from({
         id,
         user,
         birthDate,

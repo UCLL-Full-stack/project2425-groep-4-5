@@ -1,8 +1,6 @@
 import { Doctor } from "./doctor";
 import { Doctor as DoctorPrisma, Clinic as ClinicPrisma, PrismaClient, Prisma } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
+import database from "../repository/database";
 export class Clinic {
     private id: number
     private name: string
@@ -58,7 +56,7 @@ export class Clinic {
             && this.openingHours === clinic.openingHours
             && this.doctors.every((doctor, index) => doctor.equals(clinic.doctors[index]));
     }
-    static from ({
+    static from({
         id,
         name,
         address,
@@ -77,6 +75,6 @@ export class Clinic {
             description: description ?? undefined,
             openingHours,
             doctors: doctors.map((doctor: DoctorPrisma): Doctor => Doctor.from(doctor)),
-    },);
+        },);
     }
 }

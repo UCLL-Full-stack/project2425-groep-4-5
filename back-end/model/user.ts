@@ -1,29 +1,34 @@
 import { Role } from "../types/index";
-import { User as UserPrisma, Role as RolePrisma, PrismaClient, Prisma } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { User as UserPrisma, PrismaClient, Prisma } from "@prisma/client";
+import database from "../repository/database";
 
 export class User {
     protected id: number;
-    protected name: string;
+    protected firstName: string;
+    private lastName: string;
     protected email: string;
     protected password: string;
     protected role!: Role;
-    constructor(user: { id: number; name: string; email: string; password: string }) {
+
+    constructor(user: { id: number; firstName: string; lastName: string; email: string; password: string; role: Role }) {
         this.id = user.id;
-        this.name = user.name;
+        this.firstName = user.firstName;
+        this.lastName = user.lastName;
         this.email = user.email;
         this.password = user.password;
+        this.role = user.role;
     }
 
     getUserId(): number | undefined {
         return this.id;
     }
 
-    getName(): string {
-        return this.name;
+    getFirstName(): string {
+        return this.firstName;
     }
-
+    getLastName(): string {
+        return this.lastName;
+    }
     getEmail(): string {
         return this.email;
     }
@@ -44,19 +49,21 @@ export class User {
         );
     }
 
-    static from ({
+    static from({
         id,
-        name,
+        firstName,
+        lastName,
         email,
         password,
         role
     }: UserPrisma) {
         return new User({
             id,
-            name,
+            firstName,
+            lastName,
             email,
             password,
-            role
+            role: role as Role
         })
     }
 }

@@ -5,9 +5,7 @@ import { Patient as PatientPrisma, PrismaClient } from "@prisma/client";
 import { Doctor as DoctorPrisma } from "@prisma/client";
 import { Clinic as ClinicPrisma } from "@prisma/client";
 import { Appointment as AppointmentPrisma } from "@prisma/client";
-
-const prisma = new PrismaClient();
-
+import database from "../repository/database";
 export class Appointment {
     private id: number;
     private date: Date;
