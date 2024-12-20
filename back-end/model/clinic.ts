@@ -1,9 +1,9 @@
 import { Doctor } from "./doctor";
+import { Doctor as DoctorPrisma, Clinic as ClinicPrisma, PrismaClient, Prisma } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export class Clinic {
-    static from(clinic: any): Clinic {
-        throw new Error("Method not implemented.");
-    }
     private id: number
     private name: string
     private address: string
@@ -57,5 +57,26 @@ export class Clinic {
             && this.description === clinic.description
             && this.openingHours === clinic.openingHours
             && this.doctors.every((doctor, index) => doctor.equals(clinic.doctors[index]));
+    }
+    static from ({
+        id,
+        name,
+        address,
+        phone,
+        email,
+        description,
+        openingHours,
+        doctors,
+    }: ClinicPrisma & { doctors: DoctorPrisma[]; }) {
+        return new Clinic({
+            id,
+            name,
+            address,
+            phone,
+            email,
+            description: description ?? undefined,
+            openingHours,
+            doctors: doctors.map((doctor: DoctorPrisma): Doctor => Doctor.from(doctor)),
+    },);
     }
 }

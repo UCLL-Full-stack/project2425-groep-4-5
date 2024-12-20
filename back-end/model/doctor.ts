@@ -59,7 +59,7 @@ export class Doctor {
             id,
             user: User.from(user),
             specialisation,
-            
+            description: undefined,
             clinic: Clinic.from(clinic),
     }
         );

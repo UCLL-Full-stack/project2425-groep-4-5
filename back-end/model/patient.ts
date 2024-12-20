@@ -2,6 +2,10 @@ import { Role } from "../types";
 import { Appointment } from "./appointment";
 import { MedicalInfo } from "./medicalInfo";
 import { User } from "./user";
+import {User as UserPrisma, Appointment as AppointmentPrisma, MedicalInfo as MedicalInfoPrisma, PrismaClient, Prisma} from "@prisma/client"
+
+const prisma = new PrismaClient();
+
 
 export class Patient {
     private id: number;
@@ -46,5 +50,21 @@ export class Patient {
             && this.patientAppointments === patient.patientAppointments
             && this.medicalInfo === patient.medicalInfo
         );
+    }
+
+    static from ({
+        id,
+        user,
+        birthDate,
+        patientAppointments,
+        medicalInfo
+    }: Patient & { user: UserPrisma; patientAppointments: AppointmentPrisma[]; medicalInfo: MedicalInfoPrisma | null; }) {
+        return new Patient({
+            id,
+            user: User.from(user),
+            birthDate,
+            patientAppointments,
+            medicalInfo
+        })
     }
 }

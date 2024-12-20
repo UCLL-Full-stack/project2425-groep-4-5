@@ -1,4 +1,7 @@
 import { User } from "./user";
+import { Prisma, PrismaClient, Admin as AdminPrisma, User as UserPrisma } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export class Admin {
     private id: number;
@@ -33,5 +36,15 @@ export class Admin {
         if (admin.user == null) {
             throw new Error("User is required!");
         }
+    }
+
+    static from({
+        id,
+        user,
+    }: AdminPrisma & { user: UserPrisma; }) {
+        return new Admin({
+            id,
+            user: User.from(user),
+        });
     }
 }

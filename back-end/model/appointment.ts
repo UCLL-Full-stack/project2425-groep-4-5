@@ -1,6 +1,12 @@
 import { Patient } from "./patient";
 import { Clinic } from "./clinic";
 import { Doctor } from "./doctor";
+import { Patient as PatientPrisma, PrismaClient } from "@prisma/client";
+import { Doctor as DoctorPrisma } from "@prisma/client";
+import { Clinic as ClinicPrisma } from "@prisma/client";
+import { Appointment as AppointmentPrisma } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export class Appointment {
     private id: number;
@@ -71,9 +77,21 @@ export class Appointment {
         }
     }
 
-    static from(
-
-    ) {
-
+    static from({
+        id,
+        date,
+        time,
+        patient,
+        doctor,
+        clinic,
+    }: AppointmentPrisma & { patient: PatientPrisma; doctor: DoctorPrisma; clinic: ClinicPrisma; }) {
+        return new Appointment({
+            id,
+            date,
+            time,
+            patient: Patient.from(patient),
+            doctor: Doctor.from(doctor),
+            clinic: Clinic.from(clinic),
+        });
     }
 }

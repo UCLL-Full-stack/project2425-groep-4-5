@@ -1,9 +1,9 @@
 import { Role } from "../types/index";
+import { User as UserPrisma, Role as RolePrisma, PrismaClient, Prisma } from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export class User {
-    static from(user: any): User {
-        throw new Error("Method not implemented.");
-    }
     protected id: number;
     protected name: string;
     protected email: string;
@@ -42,5 +42,21 @@ export class User {
             && this.password === user.password
             && this.role === user.role
         );
+    }
+
+    static from ({
+        id,
+        name,
+        email,
+        password,
+        role
+    }: UserPrisma) {
+        return new User({
+            id,
+            name,
+            email,
+            password,
+            role
+        })
     }
 }

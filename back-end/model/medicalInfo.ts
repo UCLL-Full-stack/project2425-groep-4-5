@@ -1,4 +1,7 @@
 import { Patient } from "./patient";
+import {Patient as PatientPrisma, PrismaClient, Prisma} from "@prisma/client";
+
+const prisma = new PrismaClient();
 
 export class MedicalInfo {
     private id?: number
@@ -53,4 +56,21 @@ export class MedicalInfo {
             && this.currentMedications === medicalInfo.currentMedications
             && this.patient.equals(medicalInfo.patient)
     }
+
+    static from ({
+        id,
+        bloodType,
+        allergies,
+        currentMedications,
+        patient
+    }: MedicalInfo & { patient: PatientPrisma; }) {
+        return new MedicalInfo({
+            id,
+            bloodType,
+            allergies,
+            currentMedications,
+            patient: Patient.from(patient)
+    })
+    }
+
 }
